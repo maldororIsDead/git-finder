@@ -38,7 +38,6 @@ class DownloadGitRepository extends Command
 
         foreach ($urls as $url) {
             $gitUrl = $this->createGitUrl($url);
-
             $path = $this->getPath($url);
 
             $this->download($gitUrl, $path)
@@ -49,15 +48,13 @@ class DownloadGitRepository extends Command
         $this->parseFiles($files);
     }
 
-    private function createGitUrl($url)
+    protected function createGitUrl(string $url): string
     {
         return 'https://github.com/' . $url . '/archive/master.zip';
     }
 
     public function download(string $url, string $path): DownloadGitRepository
     {
-        $this->output->writeln(PHP_EOL);
-
         if (!file_exists(static::DOWNLOADS_PATH)) {
             mkdir(static::DOWNLOADS_PATH);
         }
@@ -92,7 +89,7 @@ class DownloadGitRepository extends Command
         unlink($zipFile);
     }
 
-    public function getPath(string $filename): string
+    protected function getPath(string $filename): string
     {
         return static::DOWNLOADS_PATH . DIRECTORY_SEPARATOR . str_replace('/', '-', $filename);
     }
