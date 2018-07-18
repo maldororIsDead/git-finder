@@ -15,7 +15,7 @@ use ZipArchive;
 class DownloadGitRepository extends Command
 {
     const DOWNLOADS_PATH = 'storage';
-    const PUBLIC_CLASS = '/(?P<method>((a|s).*)?public([\w\s]*)?function\s[\w]+\([^)]*\).*)/';
+    const PUBLIC_METHOD = '/(?P<method>((a|s).*)?public([\w\s]*)?function\s[\w]+\([^)]*\).*)/';
 
     /** @var ProgressBar */
     protected $progressBar;
@@ -74,14 +74,13 @@ class DownloadGitRepository extends Command
         return $files = Finder::create()
             ->in(static::DOWNLOADS_PATH)
             ->name('*.php')
-            ->contains(static::PUBLIC_CLASS)
+            ->contains(static::PUBLIC_METHOD)
             ->notContains('class=');
     }
 
     public function extract(string $zipFile): void
     {
         $archive = new ZipArchive;
-
         $archive->open($zipFile);
         $archive->extractTo(static::DOWNLOADS_PATH);
         $archive->close();
@@ -112,9 +111,9 @@ class DownloadGitRepository extends Command
 
     protected function parsePublicMethods(string $content): array
     {
-        preg_match_all(static::PUBLIC_CLASS, $content, $matches);
+        preg_match_all(static::PUBLIC_METHOD, $content, $matches);
 
-        return $matches['method'];
+        return str_replace(['public', 'function'], '', $matches['method']);
     }
 
     public function onProgress(int $total, int $downloaded): void
