@@ -4,7 +4,7 @@ namespace App\Services;
 
 use ZipArchive;
 
-class Extraction
+class Extracter
 {
     /** @var string */
     protected $path;

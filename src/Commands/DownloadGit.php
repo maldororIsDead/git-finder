@@ -4,8 +4,8 @@ namespace App\Commands;
 
 use App\Client;
 use App\Services\Downloader;
-use App\Services\Extraction;
-use App\Services\FinderMethod;
+use App\Services\Extracter;
+use App\Services\FilesFinder;
 use App\Services\Parser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -23,10 +23,10 @@ class DownloadGit extends Command
     /** @var Downloader */
     protected $downloader;
 
-    /** @var Extraction */
+    /** @var Extracter */
     protected $extraction;
 
-    /** @var FinderMethod */
+    /** @var FilesFinder */
     protected $finder;
 
     /** @var Client */
@@ -35,7 +35,7 @@ class DownloadGit extends Command
     /** @var Parser */
     protected $parser;
 
-    public function __construct(Downloader $downloader, Extraction $extraction, FinderMethod $finder, Parser $parser)
+    public function __construct(Downloader $downloader, Extracter $extraction, FilesFinder $finder, Parser $parser)
     {
         parent::__construct();
 

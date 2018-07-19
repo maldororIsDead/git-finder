@@ -21,13 +21,12 @@ class Parser
         $this->regExpression = $regExpression;
     }
 
-    public function parseFiles(Finder $files, OutputInterface $output): array
+    public function parseFiles(Finder $files): array
     {
         $parsedFiles = [];
 
         $this->files = $files;
-        $this->output = $output;
-
+ 
         foreach ($this->files as $file) {
             $parsedFiles[$file->getRelativePathname()] = $this->parsePublicMethods($file->getContents());
         }

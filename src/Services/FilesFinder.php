@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Services;
+
 use Symfony\Component\Finder\Finder;
 
-class FinderMethod
+class FilesFinder
 {
     /** @var string */
     protected $path;
@@ -17,7 +18,8 @@ class FinderMethod
         $this->regExPublicMethod = $regExPublicMethod;
     }
 
-    public function finder(): Finder {
+    public function finder(): Finder
+    {
         return Finder::create()
             ->in($this->path)
             ->name('*.php')
