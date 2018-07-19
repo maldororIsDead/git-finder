@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -13,8 +14,14 @@ class Client extends \GuzzleHttp\Client
     /** @var ProgressBar */
     protected $progressBar;
 
-    public function setOutput(OutputInterface $output): void {
-        $this->output= $output;
+    public function setOutput(OutputInterface $output): void
+    {
+        $this->output = $output;
+    }
+
+    public function getOutput(): OutputInterface
+    {
+        return $this->output;
     }
 
     public function onProgress(int $total, int $downloaded): void
@@ -33,6 +40,7 @@ class Client extends \GuzzleHttp\Client
     public function createProgressBar(int $max): ProgressBar
     {
         $bar = new ProgressBar($this->output, $max);
+
         $bar->setBarCharacter('<fg=green>·</>');
         $bar->setEmptyBarCharacter('<fg=red>·</>');
         $bar->setProgressCharacter('<fg=green>ᗧ</>');

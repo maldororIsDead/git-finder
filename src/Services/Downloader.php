@@ -14,9 +14,6 @@ class Downloader
     /** @var Client */
     protected $client;
 
-    /** @var ProgressBarService */
-    protected $progressBar;
-
     /** @var string */
     protected $path;
 
@@ -26,7 +23,8 @@ class Downloader
         $this->path = $path;
     }
 
-    public function getClient() {
+    public function getClient(): Client
+    {
         return $this->client;
     }
 

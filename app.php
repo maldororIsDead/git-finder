@@ -15,9 +15,16 @@ require __DIR__ . '/vendor/autoload.php';
 const DOWNLOADS_PATH = 'storage';
 const PUBLIC_METHOD = '/(?P<method>((a|s).*)?public([\w\s]*)?function\s[\w]+\([^)]*\).*)/';
 
+$download = new Downloader(new Client, DOWNLOADS_PATH);
+
+$extraction = new Extraction(DOWNLOADS_PATH);
+
+$parser = new Parser(PUBLIC_METHOD);
+
+$finder = new FinderMethod(DOWNLOADS_PATH, PUBLIC_METHOD);
+
 $app = new Application;
 
-$app->add(new DownloadGit(new Downloader(new Client, DOWNLOADS_PATH), new Extraction(DOWNLOADS_PATH),
-    new FinderMethod(DOWNLOADS_PATH, PUBLIC_METHOD), new Parser(PUBLIC_METHOD)));
+$app->add(new DownloadGit($download, $extraction, $finder, $parser));
 
 $app->run();
